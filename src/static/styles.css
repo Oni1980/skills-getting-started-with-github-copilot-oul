@@ -1,3 +1,18 @@
+/* Hide bullet points for participants list */
+.participants-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.delete-participant {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+}
 * {
   box-sizing: border-box;
   margin: 0;
