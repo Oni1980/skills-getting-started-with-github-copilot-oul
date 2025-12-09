@@ -20,12 +20,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const spotsLeft = details.max_participants - details.participants.length;
 
+        // core info
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
         `;
+
+        // Add participants section (DOM-built to avoid HTML injection)
+        const participantsDiv = document.createElement("div");
+        participantsDiv.className = "participants";
+        // Inline styles to make it pretty without touching CSS files
+        participantsDiv.style.backgroundColor = "#f8fafc";
+        participantsDiv.style.padding = "10px";
+        participantsDiv.style.border = "1px solid #e6eef6";
+        participantsDiv.style.borderRadius = "8px";
+        participantsDiv.style.marginTop = "8px";
+        participantsDiv.style.maxHeight = "140px";
+        participantsDiv.style.overflowY = "auto";
+
+        const participantsHeader = document.createElement("div");
+        participantsHeader.style.marginBottom = "6px";
+        participantsHeader.style.fontWeight = "600";
+        participantsHeader.textContent = "Participants";
+        participantsDiv.appendChild(participantsHeader);
+
+        const ul = document.createElement("ul");
+        ul.className = "participants-list";
+        ul.style.margin = "0";
+        ul.style.paddingLeft = "20px";
+        ul.style.marginBottom = "0";
+
+        if (Array.isArray(details.participants) && details.participants.length > 0) {
+          details.participants.forEach((p) => {
+            const li = document.createElement("li");
+            li.className = "participant-item";
+            li.textContent = p;
+            li.style.padding = "2px 0";
+            ul.appendChild(li);
+          });
+        } else {
+          const li = document.createElement("li");
+          li.className = "participant-empty";
+          li.textContent = "No participants yet";
+          li.style.fontStyle = "italic";
+          li.style.color = "#6b7280";
+          ul.appendChild(li);
+        }
+
+        participantsDiv.appendChild(ul);
+        activityCard.appendChild(participantsDiv);
 
         activitiesList.appendChild(activityCard);
 
